@@ -14,7 +14,7 @@
   </nav>
 
   <div class="ui inverted segment">
-    <h4>Información de la compañía</h4>
+    <h4>Modificar información de la compañía:</h4>
     <div class="ui divider"></div>
     <form class="ui inverted form">
       <h4 class="ui horizontal divider header"></h4>
@@ -57,7 +57,7 @@
         </div>
       </div>
 
-      <button class="ui button fluid grey" @click="$router.push('home/update')">
+      <button class="ui button fluid green" @click="$router.push('/home')">
         <i class="edit outline icon"></i> Modificar
       </button>
     </form>

@@ -24,6 +24,9 @@
     <router-view
       v-on:completedLogin="completedLogin"
       v-on:completedRegister="completedRegister"
+      v-on:completedHome="completedHome"
+      v-on:completedProducts="completedProducts"
+      v-on:completedClients="completedClients"
       v-on:logOut="logOut"
     >
     </router-view>
@@ -63,6 +66,18 @@ export default {
       alert("Registro Exitoso");
       this.completedLogin(data);
     },
+    completedHome: function() {
+      alert("Información ingresada exitosamente");
+      this.$router.push({ name: "Home" });
+    },
+    completedProducts: function() {
+      alert("Producto agregado exitosamente");
+      this.$router.push({ name: "Products" });
+    },
+    completedClients: function() {
+      alert("Cliente agregado exitosamente");
+      this.$router.push({ name: "Clients" });
+    },
     logOut: function() {
       localStorage.clear();
       alert("Sesión Cerrada");
@@ -70,6 +85,9 @@ export default {
     },
     loadHome: function() {
       this.$router.push({ name: "Home" });
+    },
+    loadCreateHome: function() {
+      this.$router.push({ name: "CreateHome" });
     },
     loadUpdateHome: function() {
       this.$router.push({ name: "UpdateHome" });

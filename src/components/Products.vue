@@ -45,6 +45,7 @@
     <table class="ui teal table">
       <thead>
         <tr>
+          <th></th>
           <th>#</th>
           <th>Código</th>
           <th>Categoría</th>
@@ -85,6 +86,18 @@ import jwt_decode from "jwt-decode";
 import axios from "axios";
 export default {
   name: "Products",
+
+  data: function() {
+    return {
+      id: 0,
+      codigoproducto: "",
+      categoriaproducto: "",
+      descripcion: "",
+      genero: "",
+      precio: "",
+      unidadesdisponibles: 0,
+    };
+  },
 
   methods: {
     getData: async function() {

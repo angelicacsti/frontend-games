@@ -3,6 +3,7 @@ import App from "./App.vue";
 import Login from "./components/Login.vue";
 import Register from "./components/Register.vue";
 import Home from "./components/Home.vue";
+import CreateHome from "./components/CreateHome.vue";
 import UpdateHome from "./components/UpdateHome.vue";
 import Products from "./components/Products.vue";
 import CreateProduct from "./components/CreateProduct.vue";
@@ -36,6 +37,11 @@ const routes = [
     path: "/home",
     name: "Home",
     component: Home,
+  },
+  {
+    path: "/home/create",
+    name: "CreateHome",
+    component: CreateHome,
   },
   {
     path: "/home/update",

@@ -45,55 +45,83 @@
       </div>
     </div> -->
 
-    <form class="ui form">
+    <form class="ui form" v-on:submit.prevent="processClients">
       <h4 class="ui dividing header">
         Agregar datos del cliente:
       </h4>
-      <div class="two fields">
-        <div class="field">
+      <div class="one field">
+        <!-- <div class="field">
           <label><font color="white">Tipo de documento</font></label>
           <select class="ui fluid dropdown">
             <option value=""></option>
             <option value="CC">C.C. Cédula de ciudadanía</option>
             <option value="CE">C.E. Cédula de extranjería</option>
-          </select>
-        </div>
+          </select> 
+        </div> -->
         <div class="field">
           <label><font color="white">Número de documento</font></label>
-          <input type="text" placeholder="Número de documento" />
+          <input
+            type="text"
+            placeholder="Número de documento"
+            v-model="clients.clients_data.numerodocumento"
+          />
         </div>
       </div>
       <div class="two fields">
         <div class="field">
           <label><font color="white">Nombre completo</font></label>
-          <input type="text" placeholder="Nombre completo" />
+          <input
+            type="text"
+            placeholder="Nombre completo"
+            v-model="clients.clients_data.nombrecompleto"
+          />
         </div>
         <div class="field">
           <label><font color="white">Dirección</font></label>
-          <input type="text" placeholder="Dirección" />
+          <input
+            type="text"
+            placeholder="Dirección"
+            v-model="clients.clients_data.direccion"
+          />
         </div>
       </div>
       <div class="two fields">
         <div class="field">
           <label><font color="white">Municipio</font></label>
-          <input type="text" placeholder="Municipio" />
+          <input
+            type="text"
+            placeholder="Municipio"
+            v-model="clients.clients_data.municipio"
+          />
         </div>
         <div class="field">
           <label><font color="white">Departamento</font></label>
-          <input type="text" placeholder="Departamento" />
+          <input
+            type="text"
+            placeholder="Departamento"
+            v-model="clients.clients_data.departamento"
+          />
         </div>
       </div>
       <div class="two fields">
         <div class="field">
           <label><font color="white">Correo de contacto</font></label>
-          <input type="text" placeholder="Correo electrónico" />
+          <input
+            type="text"
+            placeholder="Correo electrónico"
+            v-model="clients.clients_data.correocontacto"
+          />
         </div>
         <div class="field">
           <label><font color="white">Teléfono de contacto</font></label>
-          <input type="text" placeholder="Teléfono de contacto" />
+          <input
+            type="text"
+            placeholder="Teléfono de contacto"
+            v-model="clients.clients_data.telefonocontacto"
+          />
         </div>
       </div>
-      <button class="ui right floated button">
+      <button type="submit" class="ui right floated button">
         <i class="folder open outline icon"></i> Agregar
       </button>
     </form>
@@ -105,8 +133,80 @@
 </template>
 
 <script>
+import jwt_decode from "jwt-decode";
+import axios from "axios";
 export default {
-  name: "CreateProduct",
+  name: "CreateClient",
+
+  data: function() {
+    return {
+      clients: {
+        user_id: 0,
+        clients_data: {
+          numerodocumento: "",
+          nombrecompleto: "",
+          direccion: "",
+          municipio: "",
+          departamento: "",
+          correocontacto: "",
+          telefonocontacto: "",
+        },
+      },
+    };
+  },
+
+  methods: {
+    processClients: async function() {
+      if (
+        localStorage.getItem("tokenRefresh") === null ||
+        localStorage.getItem("tokenAccess") === null
+      ) {
+        this.$emit("logOut");
+        return;
+      }
+
+      await this.verifyToken();
+      let token = localStorage.getItem("tokenAccess");
+      let userId = jwt_decode(token).user_id.toStri;
+
+      this.clients.user_id = userId;
+      console.log(this.clients);
+      console.log(token);
+      axios
+        .post("http://127.0.0.1:8000/clients/create/", this.clients, {
+          headers: { Authorization: `Bearer ${token}` },
+        })
+        .then((result) => {
+          console.log("Then");
+          this.$emit("completedClients");
+        })
+        .catch((error) => {
+          console.log("Error");
+          if (error.response.status == "401") {
+            alert("Usted no está autorizado para realizar esta operación.");
+          } else if (error.response.status == "400") {
+            alert(
+              "El ingreso no se pudo procesar correctamente.\nRevise todos los datos e intente de nuevo."
+            );
+          }
+        });
+    },
+    verifyToken: async function() {
+      return axios
+        .post(
+          "http://127.0.0.1:8000/refresh/",
+          { refresh: localStorage.getItem("tokenRefresh") },
+          { headers: {} }
+        )
+        .then((result) => {
+          console.log("New access token");
+          localStorage.setItem("tokenAccess", result.data.access);
+        })
+        .catch((error) => {
+          this.$emit("logOut");
+        });
+    },
+  },
 };
 </script>
 

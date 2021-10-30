@@ -14,7 +14,7 @@
   </nav>
 
   <div class="ui inverted segment">
-    <h4>Información de la compañía</h4>
+    <router-link to="/home/create"> <h4>Información de la compañía</h4> </router-link>
     <div class="ui divider"></div>
     <form class="ui inverted form">
       <h4 class="ui horizontal divider header"></h4>

@@ -50,8 +50,8 @@
         <tr>
           <thead>
             <tr>
+              <th></th>
               <th>#</th>
-              <th>Tipo de documento</th>
               <th>Número de documento</th>
               <th>Nombre completo</th>
               <th>Dirección</th>
@@ -107,7 +107,7 @@
 
 <script>
 export default {
-  name: "Products",
+  name: "Clients",
 };
 </script>
 

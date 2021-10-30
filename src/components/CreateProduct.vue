@@ -45,45 +45,70 @@
       </div>
     </div> -->
 
-    <form class="ui form">
+    <form class="ui form" v-on:submit.prevent="processProducts">
       <h4 class="ui dividing header">
         Agregar información del producto:
       </h4>
       <div class="two fields">
         <div class="field">
           <label><font color="white">Código o ID</font></label>
-          <input type="text" placeholder="Código" />
+          <input
+            type="text"
+            placeholder="Código"
+            v-model="products.products_data.codigoproducto"
+          />
         </div>
         <div class="field">
           <label><font color="white">Categoría de producto</font></label>
-          <select class="ui fluid dropdown">
+          <input
+            type="text"
+            placeholder="Categoría"
+            v-model="products.products_data.categoriaproducto"
+          />
+          <!-- <select class="ui fluid dropdown">
             <option value=""></option>
             <option value="VJ">Videojuego</option>
             <option value="CS">Consola</option>
-          </select>
+          </select> -->
         </div>
       </div>
       <div class="two fields">
         <div class="field">
           <label><font color="white">Descripción</font></label>
-          <input type="text" placeholder="Descripción" />
+          <input
+            type="text"
+            placeholder="Descripción"
+            v-model="products.products_data.descripcion"
+          />
         </div>
         <div class="field">
           <label><font color="white">Genero</font></label>
-          <input type="text" placeholder="Genero" />
+          <input
+            type="text"
+            placeholder="Genero"
+            v-model="products.products_data.genero"
+          />
         </div>
       </div>
       <div class="two fields">
         <div class="field">
           <label><font color="white">Precio</font></label>
-          <input type="text" placeholder="Precio" />
+          <input
+            type="text"
+            placeholder="Precio"
+            v-model="products.products_data.precio"
+          />
         </div>
         <div class="field">
           <label><font color="white">Unidades disponibles</font></label>
-          <input type="text" placeholder="Unidades disponibles" />
+          <input
+            type="text"
+            placeholder="Unidades disponibles"
+            v-model="products.products_data.unidadesdisponibles"
+          />
         </div>
       </div>
-      <button class="ui right floated button">
+      <button type="submit" class="ui right floated button">
         <i class="folder open outline icon"></i> Agregar
       </button>
     </form>
@@ -95,8 +120,82 @@
 </template>
 
 <script>
+import jwt_decode from "jwt-decode";
+import axios from "axios";
+
 export default {
   name: "CreateProduct",
+
+  data: function() {
+    return {
+      products: {
+        user_id: 0,
+        products_data: {
+          codigoproducto: "",
+          categoriaproducto: "",
+          descripcion: "",
+          genero: "",
+          precio: 0,
+          unidadesdisponibles: 0,
+        },
+      },
+    };
+  },
+
+  methods: {
+    processProducts: async function() {
+      if (
+        localStorage.getItem("tokenRefresh") === null ||
+        localStorage.getItem("tokenAccess") === null
+      ) {
+        this.$emit("logOut");
+        return;
+      }
+
+      await this.verifyToken();
+      let token = localStorage.getItem("tokenAccess");
+      let userId = jwt_decode(token).user_id.toStri;
+
+      this.products.user_id = userId;
+      console.log(this.products);
+      console.log(token);
+      axios
+        .post("http://127.0.0.1:8000/products/create/", this.products, {
+          headers: { Authorization: `Bearer ${token}` },
+        })
+        .then((result) => {
+          console.log("Then");
+          this.$emit("completedProducts");
+        })
+        .catch((error) => {
+          console.log("Error");
+          if (error.response.status == "401") {
+            alert("Usted no está autorizado para realizar esta operación.");
+          } else if (error.response.status == "400") {
+            alert(
+              "El ingreso no se pudo procesar correctamente.\nRevise todos los datos e intente de nuevo."
+            );
+          }
+        });
+    },
+
+    verifyToken: async function() {
+      return axios
+        .post(
+          "http://127.0.0.1:8000/refresh/",
+          { refresh: localStorage.getItem("tokenRefresh") },
+          { headers: {} }
+        )
+        .then((result) => {
+          console.log("New access token");
+          localStorage.setItem("tokenAccess", result.data.access);
+        })
+        .catch((error) => {
+          this.$emit("logOut");
+        });
+    },
+  },
+  created: async function() {},
 };
 </script>
 
