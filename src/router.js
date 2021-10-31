@@ -49,7 +49,7 @@ const routes = [
     component: UpdateHome,
   },
   {
-    path: "/products",
+    path: "/products/",
     name: "Products",
     component: Products,
   },

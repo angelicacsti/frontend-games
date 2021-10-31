@@ -106,8 +106,69 @@
 </template>
 
 <script>
+import jwt_decode from "jwt-decode";
+import axios from "axios";
 export default {
   name: "Clients",
+
+  data: function() {
+    return {
+      clients: [],
+    };
+  },
+
+  methods: {
+    getData: async function() {
+      if (
+        localStorage.getItem("token_access") === null ||
+        localStorage.getItem("token_refresh") === null
+      ) {
+        this.$emit("logOut");
+        return;
+      }
+
+      await this.verifyToken();
+
+      let token = localStorage.getItem("token_access");
+      let userId = jwt_decode(token).user_id.toString();
+
+      axios
+        .get(`http://127.0.0.1:8000/user/${userId}/`, {
+          headers: { Authorization: `Bearer ${token}` },
+        })
+        .then((result) => {
+          this.id = result.data.id;
+          this.numerodocumento = result.data.numerodocumento;
+          this.nombrecompleto = result.data.nombrecompleto;
+          this.direccion = result.data.direccion;
+          this.municipio = result.data.municipio;
+          this.departamento = result.data.departamento;
+          this.correocontacto = result.data.correocontacto;
+          this.telefonocontacto = result.data.telefonocontacto;
+        })
+        .catch(() => {
+          this.$emit("logOut");
+        });
+    },
+
+    verifyToken: function() {
+      return axios
+        .post(
+          "http://127.0.0.1:8000/refresh/",
+          { refresh: localStorage.getItem("token_refresh") },
+          { headers: {} }
+        )
+        .then((result) => {
+          localStorage.setItem("token_access", result.data.access);
+        })
+        .catch(() => {
+          this.$emit("logOut");
+        });
+    },
+  },
+  created: async function() {
+    this.getData();
+  },
 };
 </script>
 

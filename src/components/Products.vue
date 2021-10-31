@@ -56,19 +56,19 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
+        <tr v-for="product in products">
           <td class="collapsing">
             <div class="ui radio checkbox">
               <input type="radio" /> <label></label>
             </div>
           </td>
-          <td>1</td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
+          <td>{{ product.id }}</td>
+          <td>{{ product.codigoproducto }}</td>
+          <td>{{ product.categoriaproducto }}</td>
+          <td>{{ product.descripcion }}</td>
+          <td>{{ product.genero }}</td>
+          <td>{{ product.precio }}</td>
+          <td>{{ product.unidadesdisponibles }}</td>
         </tr>
       </tbody>
     </table>
@@ -89,13 +89,7 @@ export default {
 
   data: function() {
     return {
-      id: 0,
-      codigoproducto: "",
-      categoriaproducto: "",
-      descripcion: "",
-      genero: "",
-      precio: "",
-      unidadesdisponibles: 0,
+      products: [],
     };
   },
 
@@ -115,18 +109,16 @@ export default {
       let userId = jwt_decode(token).user_id.toString();
 
       axios
-        .get(
-          `https://proyecto-games-grupo5-p25.herokuapp.com/user/${userId}/`,
-          { headers: { Authorization: `Bearer ${token}` } }
-        )
+        .get(`http://127.0.0.1:8000/user/${userId}/`, {
+          headers: { Authorization: `Bearer ${token}` },
+        })
         .then((result) => {
           this.id = result.data.id;
-          this.category = result.data.category;
-          this.description = result.data.description;
-          this.gender = result.data.gender;
-          this.price = result.data.price;
-          this.available = result.data.available;
-          this.loaded = true;
+          this.codigoproducto = result.data.codigoproducto;
+          this.categoriaproducto = result.data.categoriaproducto;
+          this.descripcion = result.data.descripcion;
+          this.genero = result.data.genero;
+          this.precio = result.data.precio;
         })
         .catch(() => {
           this.$emit("logOut");
@@ -136,7 +128,7 @@ export default {
     verifyToken: function() {
       return axios
         .post(
-          "https://proyecto-games-grupo5-p25.herokuapp.com/refresh/",
+          "http://127.0.0.1:8000/refresh/",
           { refresh: localStorage.getItem("token_refresh") },
           { headers: {} }
         )
@@ -187,7 +179,7 @@ body {
   margin: 70px;
   margin-top: 20px;
   margin-left: 330px;
-  margin-bottom: 20%;
+  margin-bottom: 23%;
 }
 .footer {
   position: absolute;
