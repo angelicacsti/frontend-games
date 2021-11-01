@@ -71,14 +71,13 @@
             </div>
           </td>
           <td>1</td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
+          <td>1010800</td>
+          <td>Angélica Castiblanco</td>
+          <td>calle 91</td>
+          <td>Bogotá</td>
+          <td>Bogotá D.C.</td>
+          <td>angelicac@gmail.com</td>
+          <td>3203121233</td>
         </tr>
         <tr>
           <td class="collapsing">
@@ -87,14 +86,58 @@
             </div>
           </td>
           <td>2</td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
+          <td>10983290</td>
+          <td>Edison Rojas</td>
+          <td>Diagonal 50</td>
+          <td>Bogotá</td>
+          <td>Bogotá D.C.</td>
+          <td>Edijas@gmail.com</td>
+          <td>3201280239</td>
+        </tr>
+        <tr>
+          <td class="collapsing">
+            <div class="ui radio checkbox">
+              <input type="radio" /> <label></label>
+            </div>
+          </td>
+          <td>3</td>
+          <td>102389408</td>
+          <td>Antonio Espriella</td>
+          <td>Caracas 45</td>
+          <td>Bogotá</td>
+          <td>Bogotá D.C.</td>
+          <td>Antolla@gmail.com</td>
+          <td>320345652</td>
+        </tr>
+        <tr>
+          <td class="collapsing">
+            <div class="ui radio checkbox">
+              <input type="radio" /> <label></label>
+            </div>
+          </td>
+          <td>4</td>
+          <td>102389408</td>
+          <td>Antonio Espriella</td>
+          <td>Caracas 45</td>
+          <td>Bogotá</td>
+          <td>Bogotá D.C.</td>
+          <td>Antolla@gmail.com</td>
+          <td>320345652</td>
+        </tr>
+        <tr>
+          <td class="collapsing">
+            <div class="ui radio checkbox">
+              <input type="radio" /> <label></label>
+            </div>
+          </td>
+          <td>5</td>
+          <td>1023000</td>
+          <td>Alma Gamboa</td>
+          <td>Calle 127 7ma</td>
+          <td>Bogotá</td>
+          <td>Bogotá D.C.</td>
+          <td>agamboa@gmail.com</td>
+          <td>32012345</td>
         </tr>
       </tbody>
     </table>

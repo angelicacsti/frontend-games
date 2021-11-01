@@ -28,23 +28,6 @@
       </div>
     </div>
 
-    <!-- <div class="second menu">
-      <div class="ui compact menu">
-        <a class="active blue item" @click="$router.push('/products/create')">
-          <i class="folder open outline icon"></i>
-          Agregar
-        </a>
-        <a class="item" @click="$router.push('/products/update')">
-          <i class="edit outline icon"></i>
-          Modificar
-        </a>
-        <a class="item" @click="$router.push('/products/delete')">
-          <i class="trash alternate outline icon"></i>
-          Eliminar
-        </a>
-      </div>
-    </div> -->
-
     <form class="ui form" v-on:submit.prevent="processProducts">
       <h4 class="ui dividing header">
         Agregar información del producto:
@@ -65,11 +48,6 @@
             placeholder="Categoría"
             v-model="products.products_data.categoriaproducto"
           />
-          <!-- <select class="ui fluid dropdown">
-            <option value=""></option>
-            <option value="VJ">Videojuego</option>
-            <option value="CS">Consola</option>
-          </select> -->
         </div>
       </div>
       <div class="two fields">

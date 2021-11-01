@@ -28,36 +28,11 @@
       </div>
     </div>
 
-    <!-- <div class="second menu">
-      <div class="ui compact menu">
-        <a class="active blue item" @click="$router.push('/clients/create')">
-          <i class="folder open outline icon"></i>
-          Agregar
-        </a>
-        <a class="item" @click="$router.push('/clients/update')">
-          <i class="edit outline icon"></i>
-          Modificar
-        </a>
-        <a class="item" @click="$router.push('/clients/delete')">
-          <i class="trash alternate outline icon"></i>
-          Eliminar
-        </a>
-      </div>
-    </div> -->
-
     <form class="ui form" v-on:submit.prevent="processClients">
       <h4 class="ui dividing header">
         Agregar datos del cliente:
       </h4>
       <div class="one field">
-        <!-- <div class="field">
-          <label><font color="white">Tipo de documento</font></label>
-          <select class="ui fluid dropdown">
-            <option value=""></option>
-            <option value="CC">C.C. Cédula de ciudadanía</option>
-            <option value="CE">C.E. Cédula de extranjería</option>
-          </select> 
-        </div> -->
         <div class="field">
           <label><font color="white">Número de documento</font></label>
           <input
