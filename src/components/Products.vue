@@ -104,7 +104,7 @@ export default {
         localStorage.getItem("token_access") === null ||
         localStorage.getItem("token_refresh") === null
       ) {
-        this.$emit("completedProducts");
+        this.$emit("logOut");
         return;
       }
 
@@ -128,7 +128,7 @@ export default {
           this.loaded = true;
         })
         .catch(() => {
-          this.$emit("completedProducts");
+          this.$emit("logOut");
         });
     },
 
@@ -143,7 +143,7 @@ export default {
           localStorage.setItem("token_access", result.data.access);
         })
         .catch(() => {
-          this.$emit("completedProducts");
+          this.$emit("logOut");
         });
     },
   },
