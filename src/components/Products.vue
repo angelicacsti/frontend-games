@@ -82,68 +82,68 @@
 </template>
 
 <script>
-import jwt_decode from "jwt-decode";
-import axios from "axios";
-export default {
-  name: "Products",
+// import jwt_decode from "jwt-decode";
+// import axios from "axios";
+// export default {
+//   name: "Products",
 
-  data: function() {
-    return {
-      products: [],
-    };
-  },
+//   data: function() {
+//     return {
+//       products: [],
+//     };
+//   },
 
-  methods: {
-    getData: async function() {
-      if (
-        localStorage.getItem("token_access") === null ||
-        localStorage.getItem("token_refresh") === null
-      ) {
-        this.$emit("logOut");
-        return;
-      }
+//   methods: {
+//     getData: async function() {
+//       if (
+//         localStorage.getItem("token_access") === null ||
+//         localStorage.getItem("token_refresh") === null
+//       ) {
+//         this.$emit("logOut");
+//         return;
+//       }
 
-      await this.verifyToken();
+//       await this.verifyToken();
 
-      let token = localStorage.getItem("token_access");
-      let userId = jwt_decode(token).user_id.toString();
+//       let token = localStorage.getItem("token_access");
+//       let userId = jwt_decode(token).user_id.toString();
 
-      axios
-        .get(`http://127.0.0.1:8000/user/${userId}/`, {
-          headers: { Authorization: `Bearer ${token}` },
-        })
-        .then((result) => {
-          this.id = result.data.id;
-          this.codigoproducto = result.data.codigoproducto;
-          this.categoriaproducto = result.data.categoriaproducto;
-          this.descripcion = result.data.descripcion;
-          this.genero = result.data.genero;
-          this.precio = result.data.precio;
-        })
-        .catch(() => {
-          this.$emit("logOut");
-        });
-    },
+//       axios
+//         .get(`http://127.0.0.1:8000/user/${userId}/`, {
+//           headers: { Authorization: `Bearer ${token}` },
+//         })
+//         .then((result) => {
+//           this.id = result.data.id;
+//           this.codigoproducto = result.data.codigoproducto;
+//           this.categoriaproducto = result.data.categoriaproducto;
+//           this.descripcion = result.data.descripcion;
+//           this.genero = result.data.genero;
+//           this.precio = result.data.precio;
+//         })
+//         .catch(() => {
+//           this.$emit("logOut");
+//         });
+//     },
 
-    verifyToken: function() {
-      return axios
-        .post(
-          "http://127.0.0.1:8000/refresh/",
-          { refresh: localStorage.getItem("token_refresh") },
-          { headers: {} }
-        )
-        .then((result) => {
-          localStorage.setItem("token_access", result.data.access);
-        })
-        .catch(() => {
-          this.$emit("logOut");
-        });
-    },
-  },
-  created: async function() {
-    this.getData();
-  },
-};
+//     verifyToken: function() {
+//       return axios
+//         .post(
+//           "http://127.0.0.1:8000/refresh/",
+//           { refresh: localStorage.getItem("token_refresh") },
+//           { headers: {} }
+//         )
+//         .then((result) => {
+//           localStorage.setItem("token_access", result.data.access);
+//         })
+//         .catch(() => {
+//           this.$emit();
+//         });
+//     },
+//   },
+//   created: async function() {
+//     this.getData();
+//   },
+// };
 </script>
 
 <style lang="scss" scoped>
